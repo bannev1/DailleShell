@@ -11,17 +11,26 @@
 
 using namespace std;
 
+// Store configuration for shell
+struct Config {
+	string prompt = "> ";
+	string exitMsg = "Exiting...";
+};
+
+
 int main(int argc, char **argv) {
+	Config config;  // Access configuration
+
 	string line;  // Stores commands
 
 	// Main loop which processes inputs
 	while (true) {
 		// Print main pre-command
-		cout << "> " << flush;
+		cout << config.prompt << flush;
 
 		// Get command, if fail then exit
 		if (!getline(cin, line)) {
-			cout << "Exiting...";
+			cout << config.exitMsg;
 			break;
 		}
 	}
