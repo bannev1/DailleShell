@@ -16,6 +16,9 @@ public class Tokenizer {
 		
 		String prev = "";
 
+		// Add whitespace to line so last word gets considered
+		line += " ";
+
 		// Go through each character
 		for (char currCharacter : line.toCharArray()) {
 			switch (currCharacter) {
