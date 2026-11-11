@@ -109,14 +109,14 @@ public class Tokenizer {
 
 		// While haven't yet reached semicolon or end of ArrayList
 		while (tokenizedArray.size() != 0) {
-			prevCommand.add(tokenizedArray.get(0));
-
+			// Determine if hit semicolon, so can end
 			if (tokenizedArray.get(0).type() == Token.Type.SEMICOLON) {
 				tokenizedArray.remove(0);
 				semicolonAmt--;
 				break;
 			}
 			
+			prevCommand.add(tokenizedArray.get(0));
 			tokenizedArray.remove(0);
 		}
 
