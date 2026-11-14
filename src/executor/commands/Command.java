@@ -15,7 +15,5 @@ public abstract class Command {
 	public abstract String keyword();
 
 	// What runs the command
-	// Must return the exit status
-	// 0 = success
-	public abstract int run(ArrayList<String> args);
+	public abstract String run(ArrayList<String> args);
 }
