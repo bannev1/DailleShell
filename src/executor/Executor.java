@@ -24,25 +24,27 @@ public class Executor {
 		String result = executeRecursively(tree);
 
 		// Output result
-		IO.println(result);
+		if (result != null) {
+			IO.println(result);
+		}
 	}
 
 	// A recursive helper method for execute()
 	// It recursively executes each operator
 	private String executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError {
 		// If just a command
-		if (tree instanceof CommandNode) {
-			return executeCommands((CommandNode) tree);
+		if (currNode instanceof CommandNode) {
+			return executeCommands((CommandNode) currNode);
 		}
 		
 		// If hit semicolon
-		if (tree.value == Token.Type.SEMICOLON) {
+		if (currNode.value == Token.Type.SEMICOLON) {
 			return null;
 		}
 
 		// If is AND or OR, meaning boolean operation
-		else if (tree.value == Token.Type.AND || tree.value == Token.Type.OR) {
-			boolean result = executeBooleanOperators(tree);
+		else if (currNode.value == Token.Type.AND || currNode.value == Token.Type.OR) {
+			boolean result = executeBooleanOperators(currNode);
 
 			// Return string equivalent
 			return String.valueOf(result);
@@ -50,7 +52,7 @@ public class Executor {
 		
 		// If not just AND or OR, then throw unrecognized operator
 		else {
-			throw new SyntaxError("Unrecognized operator `" + tree.value.toString() + "`");
+			throw new SyntaxError("Unrecognized operator `" + currNode.value.toString() + "`");
 		}
 	}
 
@@ -132,12 +134,10 @@ public class Executor {
 		// Get keyword of command
 		String keyword = command.get(0).text();
 
-		command.remove(0);  // Remove keyword for parsing
-
 		ArrayList<String> arguments = new ArrayList<>();
 
-		for (Token token : command) {
-			arguments.add(token.text());
+		for (int i = 1; i < command.size(); i++) {
+			arguments.add(command.get(i).text());
 		}
 
 		// Execute Registry
