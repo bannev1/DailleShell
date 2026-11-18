@@ -77,8 +77,8 @@ public class Executor {
 		}
 
 		// Otherwise execute left and right appropriately
-		Boolean left = false;
-		Boolean right = false;
+		boolean left = false;
+		boolean right = false;
 
 		if (currNode.leftNode != null) {
 			String leftResult = executeRecursively(currNode.leftNode);
@@ -91,6 +91,11 @@ public class Executor {
 			} catch (NumberFormatException err) {
 				// Otherwise just convert to basic boolean
 				left = Boolean.parseBoolean(leftResult);
+			}
+
+			// When executing, if it's AND, means don't execute other side if false
+			if (!left && currNode.value == Token.Type.AND) {
+				return false;
 			}
 		}
 
