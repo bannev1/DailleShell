@@ -2,6 +2,7 @@ package executor;
 
 import java.util.ArrayList;
 
+import exceptions.CommandFailed;
 import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
 import executor.commands.Registry;
@@ -18,94 +19,94 @@ public class Executor {
 	}
 
 	// What executes the given Abstract Syntax Tree
-	public void execute() throws SyntaxError, CommandNotFoundError {
+	public void execute() throws SyntaxError, CommandNotFoundError, CommandFailed {
 		// Execute program
-		Result result = executeRecursively(tree);
-
-		// Output result
-		if (result != null && result.output() != null) {
-			IO.println(result.output());
-		}
+		executeRecursively(tree);
 	}
 
 	// A recursive helper method for execute()
 	// It recursively executes each operator
-	private Result executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError {
+	private Result executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError, CommandFailed {
+		// If null, raise error
+		if (currNode == null) {
+			throw new SyntaxError("Missing executable command");
+		}
+		
 		// If just a command
 		if (currNode instanceof CommandNode) {
-			return executeCommands((CommandNode) currNode);
-		}
-
-		// If hit semicolon
-		if (currNode.value == Token.Type.SEMICOLON) {
-			return null;
-		}
-
-		// If is AND or OR, meaning boolean operation
-		else if (currNode.value == Token.Type.AND || currNode.value == Token.Type.OR) {
-			boolean result = executeBooleanOperators(currNode);
-
-			// Return Result equivalent
-			return new Result(0, String.valueOf(result));
-		}
-
-		// If not just AND or OR, then throw unrecognized operator
-		else {
-			throw new SyntaxError("Unrecognized operator `" + currNode.value.toString() + "`");
-		}
-	}
-
-	// Helper method which recursively executes boolean operators (AND/OR)
-	// Added name `bool` to allow for different operators which don't deal with
-	// boolean operations
-	private boolean executeBooleanOperators(Node currNode) throws SyntaxError, CommandNotFoundError {
-		// If it's a command, execute the CommandNode
-		if (currNode instanceof CommandNode) {
-			// Execute command
 			Result result = executeCommands((CommandNode) currNode);
 			
-			// If execution result is 0, then success
-			return result.execResult() == 0;
-		}
-
-		// Otherwise execute left and right appropriately
-		boolean left = false;
-		boolean right = false;
-
-		if (currNode.leftNode != null) {
-			Result leftResult = executeRecursively(currNode.leftNode);
-
-			// If execution result is 0, then success
-			left = leftResult.execResult() == 0;
-
-			// When executing, if it's AND, means don't execute other side if false
-			if (!left && currNode.value == Token.Type.AND) {
-				return false;
+			// Output result
+			if (result != null && result.output() != null) {
+				IO.println(result.output());
 			}
+			
+			return result;
 		}
 
-		if (currNode.rightNode != null) {
-			Result rightResult = executeRecursively(currNode.rightNode);
+		Result left;
+		Result right;
 
-			// If execution result is 0, then success
-			right = rightResult.execResult() == 0;
+		// Else if need to parse a tree
+		switch (currNode.value) {
+			// If hit semicolon
+			case Token.Type.SEMICOLON:
+				return new Result(0, null);
+
+			// If hit AND
+			case Token.Type.AND:
+				try {
+					left = executeRecursively(currNode.leftNode);
+				// If execution failed, consider as boolean false
+				} catch (SyntaxError | CommandNotFoundError | CommandFailed err) {
+					left = new Result(-1, err.getMessage());
+				}
+			
+				// If left succeded, run right as well
+				if (left.execResult() != 0) {
+					return left;
+				} else {
+					try {
+						right = executeRecursively(currNode.rightNode);
+					// If execution failed, consider as boolean false
+					} catch (SyntaxError | CommandNotFoundError | CommandFailed err) {
+						right = new Result(-1, err.getMessage());
+					}
+
+					return right;
+				}
+
+			// If hit OR
+			case Token.Type.OR:
+				try {
+					left = executeRecursively(currNode.leftNode);
+				// If execution failed, consider as boolean false
+				} catch (SyntaxError | CommandNotFoundError | CommandFailed err) {
+					left = new Result(-1, err.getMessage());
+				}
+			
+				// If left succeeded, just return left
+				if (left.execResult() == 0) {
+					return left;
+				} else {
+					try {
+						right = executeRecursively(currNode.rightNode);
+					// If execution failed, consider as boolean false
+					} catch (SyntaxError | CommandNotFoundError | CommandFailed err) {
+						right = new Result(-1, err.getMessage());
+					}
+
+					return right;
+				}
+			
+			// Otherwise throw error
+			default:
+				throw new SyntaxError("Operator processing resulted in logic error. Unrecognized operator `" + currNode.value.toString() + "`");
 		}
-
-		// Determine and apply correct boolean operator
-		if (currNode.value == Token.Type.AND) {
-			return left && right;
-		}
-
-		if (currNode.value == Token.Type.OR) {
-			return left || right;
-		}
-
-		// Otherwise throw syntax error
-		throw new SyntaxError("Boolean operator not recognized");
 	}
 
 	// What executes CommandNode code
-	private Result executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError {
+	private Result executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError, CommandFailed {
 		ArrayList<Token> command = cmdNode.value;
 
 		// Make sure at least one command
