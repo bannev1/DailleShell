@@ -9,7 +9,8 @@ public class Registry {
 	public static Result run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError, ArgumentError {
 		// List of all commands
 		Command[] commandList = {
-			new Go()
+			new Go(),
+			new Path()
 		};
 		
 		// Check built-ins, and prevent case sensing

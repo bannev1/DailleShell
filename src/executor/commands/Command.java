@@ -1,6 +1,9 @@
 package executor.commands;
 
 import java.util.ArrayList;
+import exceptions.ArgumentError;
+import exceptions.CommandNotFoundError;
+import exceptions.SyntaxError;
 
 /**
  * This abstract class represents what every command looks like/extends
@@ -15,5 +18,5 @@ public abstract class Command {
 	public abstract String keyword();
 
 	// What runs the command
-	public abstract Result run(ArrayList<String> args);
+	public abstract Result run(ArrayList<String> args) throws CommandNotFoundError, SyntaxError, ArgumentError;
 }
