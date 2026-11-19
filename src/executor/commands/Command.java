@@ -15,5 +15,5 @@ public abstract class Command {
 	public abstract String keyword();
 
 	// What runs the command
-	public abstract String run(ArrayList<String> args);
+	public abstract Result run(ArrayList<String> args);
 }

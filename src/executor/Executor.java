@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
 import executor.commands.Registry;
+import executor.commands.Result;
 import parser.nodes.Node;
 import parser.nodes.CommandNode;
 import tokens.Token;
-
 
 public class Executor {
 	private Node tree;
@@ -17,26 +17,25 @@ public class Executor {
 		this.tree = tree;
 	}
 
-	
 	// What executes the given Abstract Syntax Tree
 	public void execute() throws SyntaxError, CommandNotFoundError {
 		// Execute program
-		String result = executeRecursively(tree);
+		Result result = executeRecursively(tree);
 
 		// Output result
-		if (result != null) {
-			IO.println(result);
+		if (result != null && result.output() != null) {
+			IO.println(result.output());
 		}
 	}
 
 	// A recursive helper method for execute()
 	// It recursively executes each operator
-	private String executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError {
+	private Result executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError {
 		// If just a command
 		if (currNode instanceof CommandNode) {
 			return executeCommands((CommandNode) currNode);
 		}
-		
+
 		// If hit semicolon
 		if (currNode.value == Token.Type.SEMICOLON) {
 			return null;
@@ -46,34 +45,27 @@ public class Executor {
 		else if (currNode.value == Token.Type.AND || currNode.value == Token.Type.OR) {
 			boolean result = executeBooleanOperators(currNode);
 
-			// Return string equivalent
-			return String.valueOf(result);
-		} 
-		
+			// Return Result equivalent
+			return new Result(0, String.valueOf(result));
+		}
+
 		// If not just AND or OR, then throw unrecognized operator
 		else {
 			throw new SyntaxError("Unrecognized operator `" + currNode.value.toString() + "`");
 		}
 	}
 
-
 	// Helper method which recursively executes boolean operators (AND/OR)
-	// Added name `bool` to allow for different operators which don't deal with boolean operations
+	// Added name `bool` to allow for different operators which don't deal with
+	// boolean operations
 	private boolean executeBooleanOperators(Node currNode) throws SyntaxError, CommandNotFoundError {
 		// If it's a command, execute the CommandNode
 		if (currNode instanceof CommandNode) {
 			// Execute command
-			String result = executeCommands((CommandNode) currNode);
-
-			// If resulted in integer, convert to boolean
-			try {
-				int intResult = Integer.parseInt(result);
-				// As 0 means success, only when the result is 0 does this mean it works
-				return intResult == 0;
-			} catch (NumberFormatException err) {
-				// Otherwise just convert to basic boolean
-				return Boolean.parseBoolean(result);
-			}
+			Result result = executeCommands((CommandNode) currNode);
+			
+			// If execution result is 0, then success
+			return result.execResult() == 0;
 		}
 
 		// Otherwise execute left and right appropriately
@@ -81,17 +73,10 @@ public class Executor {
 		boolean right = false;
 
 		if (currNode.leftNode != null) {
-			String leftResult = executeRecursively(currNode.leftNode);
+			Result leftResult = executeRecursively(currNode.leftNode);
 
-			// If resulted in integer, convert to boolean
-			try {
-				int leftInt = Integer.parseInt(leftResult);
-				// As 0 means success, only when the result is 0 does this mean it works
-				left = leftInt == 0;
-			} catch (NumberFormatException err) {
-				// Otherwise just convert to basic boolean
-				left = Boolean.parseBoolean(leftResult);
-			}
+			// If execution result is 0, then success
+			left = leftResult.execResult() == 0;
 
 			// When executing, if it's AND, means don't execute other side if false
 			if (!left && currNode.value == Token.Type.AND) {
@@ -100,17 +85,10 @@ public class Executor {
 		}
 
 		if (currNode.rightNode != null) {
-			String rightResult = executeRecursively(currNode.rightNode);
+			Result rightResult = executeRecursively(currNode.rightNode);
 
-			// If resulted in integer, convert to boolean
-			try {
-				int rightInt = Integer.parseInt(rightResult);
-				// As 0 means success, only when the result is 0 does this mean it works
-				right = rightInt == 0;
-			} catch (NumberFormatException err) {
-				// Otherwise just convert to basic boolean
-				right = Boolean.parseBoolean(rightResult);
-			}
+			// If execution result is 0, then success
+			right = rightResult.execResult() == 0;
 		}
 
 		// Determine and apply correct boolean operator
@@ -126,9 +104,8 @@ public class Executor {
 		throw new SyntaxError("Boolean operator not recognized");
 	}
 
-
 	// What executes CommandNode code
-	private String executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError {
+	private Result executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError {
 		ArrayList<Token> command = cmdNode.value;
 
 		// Make sure at least one command
@@ -139,6 +116,7 @@ public class Executor {
 		// Get keyword of command
 		String keyword = command.get(0).text();
 
+		// Get arguments following command
 		ArrayList<String> arguments = new ArrayList<>();
 
 		for (int i = 1; i < command.size(); i++) {
