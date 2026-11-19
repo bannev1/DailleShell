@@ -3,9 +3,10 @@ package executor.commands;
 import java.util.ArrayList;
 import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
+import exceptions.ArgumentError;
 
 public class Registry {
-	public static Result run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError {
+	public static Result run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError, ArgumentError {
 		// List of all commands
 		Command[] commandList = {
 			new Go()

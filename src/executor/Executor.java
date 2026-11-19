@@ -2,6 +2,7 @@ package executor;
 
 import java.util.ArrayList;
 
+import exceptions.ArgumentError;
 import exceptions.CommandFailed;
 import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
@@ -19,14 +20,14 @@ public class Executor {
 	}
 
 	// What executes the given Abstract Syntax Tree
-	public void execute() throws SyntaxError, CommandNotFoundError, CommandFailed {
+	public void execute() throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError {
 		// Execute program
 		executeRecursively(tree);
 	}
 
 	// A recursive helper method for execute()
 	// It recursively executes each operator
-	private Result executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError, CommandFailed {
+	private Result executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError {
 		// If null, raise error
 		if (currNode == null) {
 			throw new SyntaxError("Missing executable command");
@@ -106,7 +107,7 @@ public class Executor {
 	}
 
 	// What executes CommandNode code
-	private Result executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError, CommandFailed {
+	private Result executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError {
 		ArrayList<Token> command = cmdNode.value;
 
 		// Make sure at least one command
