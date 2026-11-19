@@ -15,4 +15,9 @@ public class State {
 	// Where the shell 'is' currently
 	// Starts where its launched
 	public static File cwd = new File(System.getProperty("user.dir"));
+
+	// Returns path of shell
+	public static String path() {
+		return cwd.getAbsolutePath();
+	}
 }
