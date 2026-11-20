@@ -13,7 +13,10 @@ public class Registry {
 		Command[] commandList = {
 			new Go(),
 			new Path(),
-			new Exit()
+			new Exit(),
+			new Create(),
+			new Read(),
+			new Rename(),
 		};
 		
 		// Check built-ins, and prevent case sensing
