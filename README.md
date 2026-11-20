@@ -41,7 +41,7 @@
 
 The name *"Daille"* stems from the Old Norse word *"dæll"*, meaning easy. Like its namesake, Daille Shell is designed to be easy to use. It intends to serve as a simpler version of the more popular [shells](https://en.wikipedia.org/wiki/Shell_(computing)) like [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) and [PowerShell](https://en.wikipedia.org/wiki/PowerShell), whilst serving as a learning opportunity for myself.
 
-To briefly explain how this shell works, it first gathers user input, 
+To briefly explain how this shell works, it first gathers user input, then it [tokenizes](https://www.ibm.com/think/topics/tokenization) said input, [parses](https://en.wikipedia.org/wiki/Parsing) these tokens into an [Abstract Syntax Tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree), before executing the commands.
 
 It is produced for a class project, and is written in Java. *Why Java?* Java was chosen due to its 
 
