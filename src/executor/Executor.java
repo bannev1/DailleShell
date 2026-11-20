@@ -5,6 +5,7 @@ import exceptions.ArgumentError;
 import exceptions.CommandFailed;
 import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
+import exceptions.ExitProgram;
 import executor.commands.Registry;
 import executor.commands.Result;
 import parser.nodes.Node;
@@ -19,14 +20,14 @@ public class Executor {
 	}
 
 	// What executes the given Abstract Syntax Tree
-	public void execute() throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError {
+	public void execute() throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError, ExitProgram {
 		// Execute program
 		executeRecursively(tree);
 	}
 
 	// A recursive helper method for execute()
 	// It recursively executes each operator
-	private Result executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError {
+	private Result executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError, ExitProgram {
 		// If null, raise error
 		if (currNode == null) {
 			throw new SyntaxError("Missing executable command");
@@ -106,7 +107,7 @@ public class Executor {
 	}
 
 	// What executes CommandNode code
-	private Result executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError {
+	private Result executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError, CommandFailed, ArgumentError, ExitProgram {
 		ArrayList<Token> command = cmdNode.value;
 
 		// Make sure at least one command

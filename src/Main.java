@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import exceptions.ArgumentError;
 import exceptions.CommandFailed;
 import exceptions.CommandNotFoundError;
+import exceptions.ExitProgram;
 import exceptions.SyntaxError;
 import executor.Executor;
 import executor.State;
@@ -34,7 +35,6 @@ public class Main {
 		// Main loop running/processing text
 		while (true) {
 			if (newCommand) {
-				
 				IO.print(State.path() + " " + Config.prompt);
 			} else {
 				IO.print(Config.continueCmd);
@@ -66,42 +66,52 @@ public class Main {
 			}
 			
 			// Otherwise, if command written, run commands
-			while (tokenizer.hasSemicolon()) {
-				// Get tokenized command
-				userInput = tokenizer.clearPreviousCommand();
-
-				try {
-					try {
-						// Parse the tokenized command 
-						Parser parser = new Parser(userInput);
-						Node node = parser.parse();
+			try {
+				while (tokenizer.hasSemicolon()) {
+					// Get tokenized command
+					userInput = tokenizer.clearPreviousCommand();
 	
-						// Use the executor to execute the tree
-						Executor executor = new Executor(node);
-						executor.execute();
-						
-					// Print errors
-					} catch (SyntaxError err) {
-						IO.println(Config.syntaxError + ": " + err.getMessage());
-					} catch (CommandNotFoundError err) {
-						IO.println(Config.commandNotFound + ": " + err.getMessage());
-					} catch (ArgumentError err) {
-						IO.println(Config.argumentError + ": " + err.getMessage());
-					} catch (CommandFailed err) {
-						IO.println(Config.genericError + ": " + err.getMessage());
-					}
-				} catch (Exception err) {
-					// If caught generic exception likely from executor, print error
-					IO.println(Config.genericError + ": " + err.getMessage());
+					try {
+						try {
+							// Parse the tokenized command 
+							Parser parser = new Parser(userInput);
+							Node node = parser.parse();
+		
+							// Use the executor to execute the tree
+							Executor executor = new Executor(node);
+							executor.execute();
+							
+						// Print errors
+						} catch (SyntaxError err) {
+							IO.println(Config.syntaxError + ": " + err.getMessage());
+						} catch (CommandNotFoundError err) {
+							IO.println(Config.commandNotFound + ": " + err.getMessage());
+						} catch (ArgumentError err) {
+							IO.println(Config.argumentError + ": " + err.getMessage());
+						} catch (CommandFailed err) {
+							IO.println(Config.genericError + ": " + err.getMessage());
+						}
+					} catch (Exception err) {
+						// If caught ExitProgram, exit
+						if (err instanceof ExitProgram) {
+							throw err;
+						}
 
-					// Help print stack trace if on debug mode
-					if (Config.debug) {
-						err.printStackTrace();
+						// If caught generic exception likely from executor, print error
+						IO.println(Config.genericError + ": " + err.getMessage());
+	
+						// Help print stack trace if on debug mode
+						if (Config.debug) {
+							err.printStackTrace();
+						}
 					}
 				}
+	
+				newCommand = true;
+			} catch (ExitProgram err) {
+				// If received signal to exit program, exit/break
+				break;
 			}
-
-			newCommand = true;
 		}
 
 		// Print exit code

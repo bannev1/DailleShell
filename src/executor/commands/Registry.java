@@ -2,16 +2,18 @@ package executor.commands;
 
 import java.util.ArrayList;
 import exceptions.CommandNotFoundError;
+import exceptions.ExitProgram;
 import exceptions.SyntaxError;
 import exceptions.ArgumentError;
 import exceptions.CommandFailed;
 
 public class Registry {
-	public static Result run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError, ArgumentError, CommandFailed {
+	public static Result run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError, ArgumentError, CommandFailed, ExitProgram {
 		// List of all commands
 		Command[] commandList = {
 			new Go(),
-			new Path()
+			new Path(),
+			new Exit()
 		};
 		
 		// Check built-ins, and prevent case sensing
