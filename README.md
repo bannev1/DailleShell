@@ -25,6 +25,7 @@
 	- [Table of Contents](#table-of-contents)
 	- [1. Introduction](#1-introduction)
 		- [The Problem](#the-problem)
+		- [How it Works](#how-it-works)
 	- [2. Installation](#2-installation)
 		- [Prerequisites](#prerequisites)
 		- [Compile](#compile)
@@ -44,9 +45,9 @@
 
 The name *"Daille"* stems from the Old Norse word *"dæll"*, meaning easy. Like its namesake, Daille Shell is designed to be easy to use. It intends to serve as a simpler version of the more popular [shells](https://en.wikipedia.org/wiki/Shell_(computing)) like [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) and [PowerShell](https://en.wikipedia.org/wiki/PowerShell).
 
-To briefly explain how this shell works, it first gathers user input, then it [tokenizes](https://www.ibm.com/think/topics/tokenization) said input, [parses](https://en.wikipedia.org/wiki/Parsing) these tokens into an [Abstract Syntax Tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree), before executing the commands.
-
 This project was produced for a class project, and is written in Java. *Why Java?* Java was chosen due to my experience with the language and its cross-platform support. While some may argue that a language like C or C++ may be more suited, for the sake of not overcomplicating this project, Java was deemed more suitable.
+
+Its tech stack is comprised of solely Java alongside Java's built-in libraries.
 
 ### The Problem
 
@@ -55,6 +56,16 @@ This project aims to help young, learning developers easily grasp how to use its
 It's designed to be different from your typical shell, *(it uses `go` to change directory instead of `cd`)* but still be intuitive such that the average person should vaguely be able to understand what is going on. `go` is more intuitively understood by the average person to go somewhere *(a different directory, perhaps?)*, whereas `cd` is an acronym which likely would require a quick Google search to comprehend.
 
 As the average developer has exposure to at least one programming language, this shell also features the infamous semicolon `;`. The semicolon is **required** after each command, to mimic the average programming language. *Why?* It aims to enforce the common understanding that a shell is a programming language.
+
+### How it Works
+
+To briefly explain how this shell works, it first gathers user input, then it [tokenizes](https://www.ibm.com/think/topics/tokenization) said input, [parses](https://en.wikipedia.org/wiki/Parsing) these tokens into an [Abstract Syntax Tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree), before executing the commands.
+
+The Eisenhower Matrix is seen as follows:
+<img alt="DailleShell Eisenhower Matrix" src="./assets/Eisenhower Matrix.png">
+
+The Flowchart is also available below:
+<img alt="DailleShell Flowchart" src="./assets/Flowchart.png" width="300">
 
 ## 2. Installation
 
