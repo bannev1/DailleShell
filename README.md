@@ -129,9 +129,9 @@ See the following table for an overview of how each supported command works:
 | `go` | `go <PATH>` | Allows you to 'go' to a different directory/folder. Operates similarly to [cd](https://en.wikipedia.org/wiki/Cd_(command)) | `go ../home;`<br>`go Downloads;`<br>`go Downloads\My Folder\here;` |
 | `path` | `path` | Outputs the current absolute/full path <br>If you change the path with `go`, this output also changes | *Sample output of `path;`:* <br> `C:\Users\username\Downloads` |
 | `create` | `create <dir/file> <ITEM NAME>` | Allows you to create the desired directory/folder or file with the specified name `<ITEM NAME>` <br> Remember to  | `create dir Folder;`<br>`create file My File.txt;` |
-| `read` | `read <FILE NAME>` | Reads the file specified by `<FILE NAME>` and outputs it | `read file.txt`<br>`read My File.txt` |
-| `rename` | `rename <PATH TO FILE/FOLDER> <NEW NAME>` | Renames a file or folder located at `<PATH TO FILE/FOLDER>` to the specified `<NEW NAME>`<br>*Note spaces are **not** yet allowed in either the path or the name for this command.* | `rename myFolder folderA`<br>`rename Downloads/aFolder folderB`<br>`rename textFile.txt file.txt`<br>`rename Folder/myFile.exe newName.exe` |
-| `exit` | `exit` | Exits the program | `exit` |
+| `read` | `read <FILE NAME>` | Reads the file specified by `<FILE NAME>` and outputs it | `read file.txt;`<br>`read My File.txt;` |
+| `rename` | `rename <PATH TO FILE/FOLDER> <NEW NAME>` | Renames a file or folder located at `<PATH TO FILE/FOLDER>` to the specified `<NEW NAME>`<br>*Note spaces are **not** yet allowed in either the path or the name for this command.* | `rename myFolder folderA;`<br>`rename Downloads/aFolder folderB;`<br>`rename textFile.txt file.txt;`<br>`rename Folder/myFile.exe newName.exe;` |
+| `exit` | `exit` | Exits the program | `exit;` |
 
 ### Operators
 
@@ -141,8 +141,8 @@ Below exists a table of current supported operators:
 
 | Operator | Description | Example |
 | :---: | :--- | :---: |
-| `&` | Means **AND**. <br>If the command to its left executed successfully, will also execute the command to its right | `go path & create file myFile.txt` |
-| `?` | Means **OR**. <br>If the command to its left executed successfully, it will *not* execute the command to its right | `create file myPath/myFile.txt ? create dir myPath` |
+| `&` | Means **AND**. <br>If the command to its left executed successfully, will also execute the command to its right | `go path & create file myFile.txt;` |
+| `?` | Means **OR**. <br>If the command to its left executed successfully, it will *not* execute the command to its right | `create file myPath/myFile.txt ? create dir myPath;` |
 
 ## 4. Roadmap
 
