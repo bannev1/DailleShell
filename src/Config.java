@@ -9,7 +9,7 @@
 public class Config {
 	// Basic configuration
 	public static String prompt = "> ";
-	public static String continueCmd = ">    ";
+	public static String continueCmd = " >   ";
 	public static String exitMessage = "Exiting...";
 	
 	// Errors
