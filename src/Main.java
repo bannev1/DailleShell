@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This program is designed to run the code required to execute Daille Shell
  *
@@ -11,9 +13,20 @@ public class Main {
 	public static void main (String[] args) {
 		String line;
 
+		Tokenizer tokenizer = new Tokenizer();
+		ArrayList<Token> userInput = new ArrayList<>();
+
+		// Indicates if is a new command or not
+		// Determines which prompt
+		boolean newCommand = true;
+
 		// Main loop running/processing text
 		while (true) {
-			IO.print(Config.prompt);
+			if (newCommand) {
+				IO.print(Config.prompt);
+			} else {
+				IO.print(Config.continueCmd);
+			}
 
 			// Read command
 			line = IO.readln();
@@ -30,6 +43,17 @@ public class Main {
 			if (line.equals("")) {
 				continue;
 			}
+
+			// Tokenize text
+			// If no semicolon, continue and wait until semicolon
+			if (tokenizer.tokenize(line)) {
+				newCommand = false;
+				continue;
+			}
+			
+			// Otherwise, if command written, get last command
+			userInput = tokenizer.clearPreviousCommand();
+			newCommand = true;
 		}
 
 		// Print exit code
