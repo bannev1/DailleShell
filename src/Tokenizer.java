@@ -9,8 +9,12 @@ import java.util.ArrayList;
  */
 
 public class Tokenizer {
+	// Final tokenized array
 	public ArrayList<Token> tokenizedArray = new ArrayList<>();  // Stores tokenized
 	
+	// Amount of semicolons in command (i.e, amount of commands)
+	private int semicolonAmt = 0;
+
 	// Given text, converts into a list of tokens
 	// Adds new commands to old tokenizedArray
 	// Returns whether or not a semicolon was entered
@@ -67,6 +71,7 @@ public class Tokenizer {
 					}
 					
 					ifSemicolon = true;
+					semicolonAmt++;
 					tokenizedArray.add(new Token(Token.Type.SEMICOLON, ";"));
 					break;
 
@@ -106,6 +111,7 @@ public class Tokenizer {
 
 			if (tokenizedArray.get(0).type() == Token.Type.SEMICOLON) {
 				tokenizedArray.remove(0);
+				semicolonAmt--;
 				break;
 			}
 			
@@ -113,5 +119,11 @@ public class Tokenizer {
 		}
 
 		return prevCommand;
+	}
+
+
+	// Determine if there's still a semicolon
+	public boolean hasSemicolon() {
+		return semicolonAmt > 0;
 	}
 }

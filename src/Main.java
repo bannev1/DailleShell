@@ -45,14 +45,20 @@ public class Main {
 			}
 
 			// Tokenize text
+			tokenizer.tokenize(line);
+			
 			// If no semicolon, continue and wait until semicolon
-			if (!tokenizer.tokenize(line)) {
+			if (!tokenizer.hasSemicolon()) {
 				newCommand = false;
 				continue;
 			}
 			
-			// Otherwise, if command written, get last command
-			userInput = tokenizer.clearPreviousCommand();
+			// Otherwise, if command written, run commands
+			while (tokenizer.hasSemicolon()) {
+				// Get tokenized command
+				userInput = tokenizer.clearPreviousCommand();
+			}
+
 			newCommand = true;
 		}
 
