@@ -16,7 +16,7 @@
 
 ## Introduction
 
-This is a shell designed to be simple.
+This is a shell designed to be simple, designed as a class project and written in Java.
 
 ## Contributing
 
