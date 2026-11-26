@@ -46,6 +46,20 @@ public class Tokenizer {
 
 					results.add(new Token(Token.Type.OR, "?"));
 					break;
+					
+					// SEMICOLON
+					case ';':
+					// If there exists word stored in prev
+					if (prev.length() > 0) {
+						// Create new token with word
+						Token word = new Token(Token.Type.WORD, prev);
+						prev = "";  // Reset
+						
+						results.add(word);
+					}
+					
+					results.add(new Token(Token.Type.SEMICOLON, ";"));
+					break;
 
 				// WORD / Whitespace
 				case ' ':
