@@ -35,6 +35,7 @@ int main(int argc, char **argv) {
 			break;
 		}
 	}
-	
+
 	cout << config.exitMsg;
+	return 0;
 }
