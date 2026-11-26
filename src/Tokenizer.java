@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import exceptions.SyntaxError;
 
 /**
  * This program helps convert plain text into tokens
@@ -10,14 +9,20 @@ import exceptions.SyntaxError;
  */
 
 public class Tokenizer {
+	public ArrayList<Token> tokenizedArray = new ArrayList<>();  // Stores tokenized
+	
 	// Given text, converts into a list of tokens
-	public static ArrayList<Token> tokenize(String line) throws SyntaxError {
-		ArrayList<Token> results = new ArrayList<>();  // Stores results
-		
+	// Adds new commands to old tokenizedArray
+	// Returns whether or not a semicolon was entered
+	// If there was a semicolon, it returns true
+	public boolean tokenize(String line) {
 		String prev = "";
 
 		// Add whitespace to line so last word gets considered
 		line += " ";
+
+		// If there was a semicolon
+		boolean ifSemicolon = false;
 
 		// Go through each character
 		for (char currCharacter : line.toCharArray()) {
@@ -30,10 +35,10 @@ public class Tokenizer {
 						Token word = new Token(Token.Type.WORD, prev);
 						prev = "";  // Reset
 
-						results.add(word);
+						tokenizedArray.add(word);
 					}
 
-					results.add(new Token(Token.Type.AND, "&"));
+					tokenizedArray.add(new Token(Token.Type.AND, "&"));
 					break;
 
 				// OR
@@ -44,10 +49,10 @@ public class Tokenizer {
 						Token word = new Token(Token.Type.WORD, prev);
 						prev = "";  // Reset
 
-						results.add(word);
+						tokenizedArray.add(word);
 					}
 
-					results.add(new Token(Token.Type.OR, "?"));
+					tokenizedArray.add(new Token(Token.Type.OR, "?"));
 					break;
 					
 				// SEMICOLON
@@ -58,10 +63,11 @@ public class Tokenizer {
 						Token word = new Token(Token.Type.WORD, prev);
 						prev = "";  // Reset
 						
-						results.add(word);
+						tokenizedArray.add(word);
 					}
 					
-					results.add(new Token(Token.Type.SEMICOLON, ";"));
+					ifSemicolon = true;
+					tokenizedArray.add(new Token(Token.Type.SEMICOLON, ";"));
 					break;
 
 				// WORD / Whitespace
@@ -71,7 +77,7 @@ public class Tokenizer {
 						// Create new token with word
 						Token word = new Token(Token.Type.WORD, prev);
 						
-						results.add(word);
+						tokenizedArray.add(word);
 					}
 
 					prev = "";  // Reset
@@ -85,6 +91,27 @@ public class Tokenizer {
 			}
 		}
 
-		return results;
+		return ifSemicolon;
+	}
+
+
+	// Clear the last command (before first semicolon)
+	// Returns that command as an ArrayList<Token>
+	public ArrayList<Token> clearPreviousCommand() {
+		ArrayList<Token> prevCommand = new ArrayList<>();
+
+		// While haven't yet reached semicolon or end of ArrayList
+		while (tokenizedArray.size() != 0) {
+			prevCommand.add(tokenizedArray.get(0));
+
+			if (tokenizedArray.get(0).type() == Token.Type.SEMICOLON) {
+				tokenizedArray.remove(0);
+				break;
+			}
+			
+			tokenizedArray.remove(0);
+		}
+
+		return prevCommand;
 	}
 }
