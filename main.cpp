@@ -15,6 +15,8 @@ using namespace std;
 struct Config {
 	string prompt = "> ";
 	string exitMsg = "Exiting...";
+	string cmdNotFound = "ERR: Command Not Found";
+	string error = "ERR: Syntax Error";
 };
 
 
@@ -30,8 +32,9 @@ int main(int argc, char **argv) {
 
 		// Get command, if fail then exit
 		if (!getline(cin, line)) {
-			cout << config.exitMsg;
 			break;
 		}
 	}
+	
+	cout << config.exitMsg;
 }
