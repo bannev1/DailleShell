@@ -1,5 +1,13 @@
 import java.util.ArrayList;
 
+import exceptions.CommandNotFoundError;
+import exceptions.SyntaxError;
+import executor.Executor;
+import parser.Parser;
+import parser.nodes.Node;
+import tokens.Token;
+import tokens.Tokenizer;
+
 /**
  * This program is designed to run the code required to execute Daille Shell
  *
@@ -57,6 +65,32 @@ public class Main {
 			while (tokenizer.hasSemicolon()) {
 				// Get tokenized command
 				userInput = tokenizer.clearPreviousCommand();
+
+				try {
+					try {
+						// Parse the tokenized command 
+						Parser parser = new Parser(userInput);
+						Node node = parser.parse();
+	
+						// Use the executor to execute the tree
+						Executor executor = new Executor(node);
+						executor.execute();
+						
+					// Print errors
+					} catch (SyntaxError err) {
+						IO.println(Config.commandNotFound + ": " + err.getMessage());
+					} catch (CommandNotFoundError err) {
+						IO.println(Config.commandNotFound + ": " + err.getMessage());
+					}
+				} catch (Exception err) {
+					// If caught generic exception likely from executor, print error
+					IO.println(Config.genericError + ": " + err.getMessage());
+
+					// Help print stack trace if on debug mode
+					if (Config.debug) {
+						err.printStackTrace();
+					}
+				}
 			}
 
 			newCommand = true;

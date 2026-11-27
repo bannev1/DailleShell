@@ -12,7 +12,10 @@ public class Config {
 	public static String continueCmd = " >   ";
 	public static String exitMessage = "Exiting...";
 	
+	public static boolean debug = true;
+	
 	// Errors
 	public static String commandNotFound = "ERR: Command Not Found";
 	public static String syntaxError = "ERR: Syntax Error";
+	public static String genericError = "ERR";
 }
