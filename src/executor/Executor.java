@@ -2,7 +2,9 @@ package executor;
 
 import java.util.ArrayList;
 
+import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
+import executor.commands.Registry;
 import parser.nodes.Node;
 import parser.nodes.CommandNode;
 import tokens.Token;
@@ -17,7 +19,7 @@ public class Executor {
 
 	
 	// What executes the given Abstract Syntax Tree
-	public void execute() throws SyntaxError {
+	public void execute() throws SyntaxError, CommandNotFoundError {
 		// Execute program
 		String result = executeRecursively(tree);
 
@@ -27,7 +29,7 @@ public class Executor {
 
 	// A recursive helper method for execute()
 	// It recursively executes each operator
-	private String executeRecursively(Node currNode) throws SyntaxError {
+	private String executeRecursively(Node currNode) throws SyntaxError, CommandNotFoundError {
 		// If just a command
 		if (tree instanceof CommandNode) {
 			return executeCommands((CommandNode) tree);
@@ -55,7 +57,7 @@ public class Executor {
 
 	// Helper method which recursively executes boolean operators (AND/OR)
 	// Added name `bool` to allow for different operators which don't deal with boolean operations
-	private boolean executeBooleanOperators(Node currNode) throws SyntaxError {
+	private boolean executeBooleanOperators(Node currNode) throws SyntaxError, CommandNotFoundError {
 		// If it's a command, execute the CommandNode
 		if (currNode instanceof CommandNode) {
 			// Execute command
@@ -119,8 +121,27 @@ public class Executor {
 
 
 	// What executes CommandNode code
-	private String executeCommands(CommandNode cmdNode) {
+	private String executeCommands(CommandNode cmdNode) throws SyntaxError, CommandNotFoundError {
 		ArrayList<Token> command = cmdNode.value;
+
+		// Make sure at least one command
+		if (command.size() == 0) {
+			throw new SyntaxError("Commands Missing");
+		}
+
+		// Get keyword of command
+		String keyword = command.get(0).text();
+
+		command.remove(0);  // Remove keyword for parsing
+
+		ArrayList<String> arguments = new ArrayList<>();
+
+		for (Token token : command) {
+			arguments.add(token.text());
+		}
+
+		// Execute Registry
+		return Registry.run(keyword, arguments);
 	}
 
 }
