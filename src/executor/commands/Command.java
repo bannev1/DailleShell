@@ -3,6 +3,7 @@ package executor.commands;
 import java.util.ArrayList;
 import exceptions.ArgumentError;
 import exceptions.SyntaxError;
+import exceptions.ExitProgram;
 import exceptions.CommandFailed;
 
 /**
@@ -18,5 +19,5 @@ public abstract class Command {
 	public abstract String keyword();
 
 	// What runs the command
-	public abstract Result run(ArrayList<String> args) throws SyntaxError, CommandFailed, ArgumentError;
+	public abstract Result run(ArrayList<String> args) throws SyntaxError, CommandFailed, ArgumentError, ExitProgram;
 }
