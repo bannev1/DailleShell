@@ -1,3 +1,5 @@
+package tokens;
+
 /**
  * This program represents what the Token looks like
  * Each token represents keywords, operators or identifiers
