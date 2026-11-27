@@ -78,26 +78,21 @@ public class Parser {
 		}
 
 		// While on an operator (that's not a semicolon)
-		try {
-			while ((!isOperator(Token.Type.WORD)) && (!isOperator(Token.Type.SEMICOLON))) {
-				Token.Type operator = tokens.get(index).type();
-				index++;
-	
-				// Get the commands after operator
-				Node right = parseCommand();
-	
-				// Combine both current left and right nodes
-				Node parent = new Node();
-				parent.value = operator;
-				parent.leftNode = left;
-				parent.rightNode = right;
-	
-				// Allow next operator to add to the parent node
-				left = parent;
-			}
-		} catch (IndexOutOfBoundsException err) {
-			// If attempt to parse operator leads to index over size
-			throw new SyntaxError("Missing command after operators");
+		while (index < tokens.size() && (!isOperator(Token.Type.WORD)) && (!isOperator(Token.Type.SEMICOLON))) {
+			Token.Type operator = tokens.get(index).type();
+			index++;
+
+			// Get the commands after operator
+			Node right = parseCommand();
+
+			// Combine both current left and right nodes
+			Node parent = new Node();
+			parent.value = operator;
+			parent.leftNode = left;
+			parent.rightNode = right;
+
+			// Allow next operator to add to the parent node
+			left = parent;
 		}
 
 		return left;
