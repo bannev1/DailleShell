@@ -13,7 +13,7 @@ public class Registry {
 		
 		// Check built-ins, and prevent case sensing
 		for (Command cmd : commandList) {
-			if (cmd.keyword() == keyword.trim().toLowerCase()) {
+			if (cmd.keyword().equals(keyword.trim().toLowerCase())) {
 				return cmd.run(arguments);
 			}
 		}
