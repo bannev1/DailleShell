@@ -29,7 +29,6 @@
 		- [Compile](#compile)
 		- [Running a Compiled Version](#running-a-compiled-version)
 		- [Run (without compiling)](#run-without-compiling)
-		- [Example session](#example-session)
 	- [3. Roadmap](#3-roadmap)
 		- [Planned Features](#planned-features)
 	- [4. Contributing](#4-contributing)
@@ -78,23 +77,18 @@ Once compiled, you can now [execute the compiled project](#running-a-compiled-ve
 
 ### Running a Compiled Version
 
-If you've followed the [Compile](#compile) section or you have downloaded a compiled version of this project from the Releases tab, you can simply run
+If you've followed the [Compile](#compile) section or you have downloaded a compiled version of this project from the Releases tab, you can simply run:
 
-```
-
-```
-
-### Run (without compiling)
-
-1. Download `daille-shell.jar` from the [Releases](<LINK>) page.
-2. Run:
 ```
 java -jar daille-shell.jar
 ```
 
-### Example session
+### Run (without compiling)
+
+To run the program without compiling, first download this repository. Once you've downloaded it, you can run it with the following command:
+
 ```
-<paste a real session here: your prompt, a few commands, and the output>
+java src/Main.java
 ```
 
 ## 3. Roadmap
@@ -107,7 +101,14 @@ java -jar daille-shell.jar
 
 The following features are planned to be implemented or are currently being implemented:
 
-- [ ] 
+- [ ] Support for external commands (i.e, Vim, git, etc)
+- [ ] Support for quotation marks in commands
+- [ ] Ability to download new commands
+- [ ] Support for basic arithmetic
+- [ ] Thread support for commands *(allowing multiple commands to be executed at the same time)*
+- [ ] Pipe `|` operator allowing for the input of one command to be "piped" into another command
+- [ ] Ability to configure the shell
+  - [ ] Option to remove its requirement of semicolons for each command
 
 
 ## 4. Contributing
