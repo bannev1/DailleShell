@@ -7,6 +7,10 @@
 
 # <div align="center">DailleShell</div>
 
+<div align="center"><i>Shell made simple.</i></div>
+
+<br>
+
 <div align="center">
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/github/stars/bannev1/DailleShell.svg?variant=secondary&amp;size=sm&amp;mode=dark&amp;theme=neutral"><img alt="GitHub Stars" src="https://www.shieldcn.dev/github/stars/bannev1/DailleShell.svg?variant=secondary&amp;size=sm&amp;mode=light&amp;theme=neutral"></picture>
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/github/forks/bannev1/dailleshell.svg?variant=secondary&amp;size=sm&amp;mode=dark&amp;theme=neutral"><img alt="GitHub Forks" src="https://www.shieldcn.dev/github/forks/bannev1/DailleShell.svg?variant=secondary&amp;size=sm&amp;mode=light&amp;theme=neutral"></picture>
