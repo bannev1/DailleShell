@@ -30,6 +30,7 @@
 	- [1. Introduction](#1-introduction)
 		- [The Problem](#the-problem)
 		- [How it Works](#how-it-works)
+		- [Tech Stack](#tech-stack)
 	- [2. Installation](#2-installation)
 		- [Prerequisites](#prerequisites)
 		- [Compile](#compile)
@@ -39,7 +40,8 @@
 		- [Commands](#commands)
 		- [Operators](#operators)
 	- [4. Roadmap](#4-roadmap)
-		- [Planned Features](#planned-features)
+		- [v2.0.0](#v200)
+		- [v1.0.0](#v100)
 	- [5. Contributing](#5-contributing)
 	- [6. License](#6-license)
 	- [7. Credits](#7-credits)
@@ -50,8 +52,6 @@
 The name *"Daille"* stems from the Old Norse word *"dæll"*, meaning easy. Like its namesake, Daille Shell is designed to be easy to use. It intends to serve as a simpler version of the more popular [shells](https://en.wikipedia.org/wiki/Shell_(computing)) like [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) and [PowerShell](https://en.wikipedia.org/wiki/PowerShell).
 
 This project was produced for a class project, and is written in Java. *Why Java?* Java was chosen due to my experience with the language and its cross-platform support. While some may argue that a language like C or C++ may be more suited, for the sake of not overcomplicating this project, Java was deemed more suitable.
-
-Its tech stack is comprised of solely Java alongside Java's built-in libraries.
 
 ### The Problem
 
@@ -71,6 +71,10 @@ The Eisenhower Matrix used to scope the MVP is seen as follows:
 The Flowchart system diagram is also available below:  
 <img alt="DailleShell Flowchart" src="./assets/Flowchart.png" width="300">
 
+### Tech Stack
+
+Daille Shell's tech stack is comprised of solely Java version 27, alongside use of Java's built-in libraries. No external libraries were used in this project. To compile the program, GNU's [make](https://en.wikipedia.org/wiki/Make_(software)) and Java's jar were also used.
+
 ## 2. Installation
 
 > [!NOTE] 
@@ -82,18 +86,27 @@ You can also choose to [compile it yourself](#compile) or [run the program witho
 
 ### Prerequisites
 
-For this project, all you will need is **Java 27 or newer**. You can officially download Java [here](https://www.oracle.com/java/technologies/downloads/).
+For this project, all you will need to run it is: 
+- **Java version 27 or newer**. You can check what version you have installed with `java -version`
+
+You can officially download Java version 27 [here](https://www.oracle.com/java/technologies/downloads/).
+
+<br>
+
+If you want to **compile** the program, you will also need the following:
+- Linux, MacOS, or [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) installed on a Windows machine
+- GNU's [make](https://www.gnu.org/software/make/) installed
 
 ### Compile
 
 To compile this program, you can choose to compile it with [make](https://www.gnu.org/software/make/) *(may need installation)* or with just [Java](https://www.oracle.com/java/technologies/downloads/).
 
-With make:
+With **make**, *(ensure you're running either Linux, MacOS, or WSL on Windows)* you can run:
 ```
-make build
+make jar
 ```
 
-With Java:
+With **Java**:
 ```
 javac -d out $(find src -name '*.java')
 ```
@@ -120,7 +133,7 @@ java src/Main.java
 
 ## 3. Usage
 
-Once you've [installed](#2-installation) the program, now's the time to actually ***use*** it. But how, you may ask. 
+Once you've [installed](#2-installation) the program, now's the time to actually ***use*** it. But *how*, you may ask. 
 
 Once the program's up and running, you'll see something **similar** to this:
 
@@ -128,7 +141,7 @@ Once the program's up and running, you'll see something **similar** to this:
 C:\Users\username\Downloads > 
 ```
 
-The `C:\Users\username\Downloads` shows your current directory. This is where you are at this moment. The `>` indicates you can type a command.
+The `C:\Users\username\Downloads` shows your current directory. This is where you are at this moment. The `>` indicates you can type a command. Once you've typed out your command, press `Enter` and it'll process your command.
 
 Congratulations! You're now able to write commands! See [below](#commands) for a list of supported commands.
 
@@ -164,10 +177,7 @@ Below exists a table of current supported operators:
 > [!NOTE]
 > Please see the official [Kanban Roadmap](https://github.com/users/bannev1/projects/10) for more details.
 
-
-### Planned Features
-
-The following features are planned to be implemented or are currently being implemented:
+### v2.0.0
 
 - [ ] Support for external commands (i.e, Vim, git, etc)
 - [ ] Support for quotation marks in commands
@@ -179,6 +189,13 @@ The following features are planned to be implemented or are currently being impl
   - [ ] Option to remove its requirement of semicolons for each command
 - [ ] Create compiler for .daille files
 
+### v1.0.0
+- [x] Successfully tokenize user input
+- [x] Parse and create working Abstract Syntax Tree from tokens
+- [x] Create basic `exit` command
+- [x] Create basic `create`, `go`, `path`, `read`, and `rename` commands
+- [x] Create functional `&`/**AND** operator
+- [x] Create functional `?`/**OR** operator
 
 ## 5. Contributing
 
