@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
 import executor.Executor;
+import executor.State;
 import parser.Parser;
 import parser.nodes.Node;
 import tokens.Token;
@@ -31,7 +32,8 @@ public class Main {
 		// Main loop running/processing text
 		while (true) {
 			if (newCommand) {
-				IO.print(Config.prompt);
+				
+				IO.print(State.path() + " " + Config.prompt);
 			} else {
 				IO.print(Config.continueCmd);
 			}
