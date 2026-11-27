@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
 import exceptions.ArgumentError;
+import exceptions.CommandFailed;
 
 public class Registry {
-	public static Result run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError, ArgumentError {
+	public static Result run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError, ArgumentError, CommandFailed {
 		// List of all commands
 		Command[] commandList = {
 			new Go(),
