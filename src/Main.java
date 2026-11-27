@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import exceptions.ArgumentError;
+import exceptions.CommandFailed;
 import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
 import executor.Executor;
@@ -80,9 +82,13 @@ public class Main {
 						
 					// Print errors
 					} catch (SyntaxError err) {
-						IO.println(Config.commandNotFound + ": " + err.getMessage());
+						IO.println(Config.syntaxError + ": " + err.getMessage());
 					} catch (CommandNotFoundError err) {
 						IO.println(Config.commandNotFound + ": " + err.getMessage());
+					} catch (ArgumentError err) {
+						IO.println(Config.argumentError + ": " + err.getMessage());
+					} catch (CommandFailed err) {
+						IO.println(Config.genericError + ": " + err.getMessage());
 					}
 				} catch (Exception err) {
 					// If caught generic exception likely from executor, print error
