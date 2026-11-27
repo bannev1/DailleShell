@@ -61,10 +61,10 @@ As the average developer has exposure to at least one programming language, this
 
 To briefly explain how this shell works, it first gathers user input, then it [tokenizes](https://www.ibm.com/think/topics/tokenization) said input, [parses](https://en.wikipedia.org/wiki/Parsing) these tokens into an [Abstract Syntax Tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree), before executing the commands.
 
-The Eisenhower Matrix used to scope the MVP is seen as follows:
+The Eisenhower Matrix used to scope the MVP is seen as follows:  
 <img alt="DailleShell Eisenhower Matrix" src="./assets/Eisenhower Matrix.png">
 
-The Flowchart system diagram is also available below:
+The Flowchart system diagram is also available below:  
 <img alt="DailleShell Flowchart" src="./assets/Flowchart.png" width="300">
 
 ## 2. Installation
