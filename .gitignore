@@ -23,5 +23,8 @@
 hs_err_pid*
 replay_pid*
 
+# Compiled output
+out/
+
 # Code editor/IDE
 .vscode/
