@@ -73,7 +73,9 @@ The Flowchart system diagram is also available below:
 
 ### Tech Stack
 
-Daille Shell's tech stack is comprised of solely Java version 27, alongside use of Java's built-in libraries. No external libraries were used in this project. To compile the program, GNU's [make](https://en.wikipedia.org/wiki/Make_(software)) and Java's jar were also used.
+Daille Shell's tech stack is comprised of solely Java version 27, alongside use of Java's built-in libraries. No external libraries were used in this project, and as everything runs in the computer's memory no data storage technologies were used either.
+
+To compile the program, GNU's [make](https://en.wikipedia.org/wiki/Make_(software)) and Java's `javac` and `jar` *(both included in the [JDK](https://en.wikipedia.org/wiki/Java_Development_Kit))* were also used.
 
 ## 2. Installation
 
