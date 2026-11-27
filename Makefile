@@ -12,3 +12,6 @@ run: build
 
 clean:
 	rm -rf $(OUT_DIR)
+
+jar: build
+	jar --create --file daille-shell.jar --main-class Main -C $(OUT_DIR) .
