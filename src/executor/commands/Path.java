@@ -21,8 +21,6 @@ public class Path extends Command {
 		}
 
 		// Output current path
-		IO.println(State.path());
-
 		return new Result(0, State.path());
 	}
 }
