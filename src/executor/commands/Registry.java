@@ -5,7 +5,7 @@ import exceptions.CommandNotFoundError;
 import exceptions.SyntaxError;
 
 public class Registry {
-	public static String run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError {
+	public static Result run(String keyword, ArrayList<String> arguments) throws CommandNotFoundError, SyntaxError {
 		// List of all commands
 		Command[] commandList = {
 			new Go()

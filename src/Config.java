@@ -17,5 +17,6 @@ public class Config {
 	// Errors
 	public static String commandNotFound = "ERR: Command Not Found";
 	public static String syntaxError = "ERR: Syntax Error";
+	public static String commandFailed = "ERR: Command Execution Failed";
 	public static String genericError = "ERR";
 }
